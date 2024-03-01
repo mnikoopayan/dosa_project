@@ -18,16 +18,23 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
-# Function to extract customers' information from orders
-def get_customers(orders):
-    return {order['phone']: order['name'] for order in orders}
 
-# Update main function to include customer extraction
+# Function to compile item information from orders
+def get_items(orders):
+    items = {}
+    for order in orders:
+        for item in order['items']:
+            if item['name'] not in items:
+                items[item['name']] = {'price': item['price'], 'orders': 1}
+            else:
+                items[item['name']]['orders'] += 1
+    return items
+
+# Update main function to include item compilation
 def main():
-    # Existing setup and order loading...
+    # Existing setup, order loading, and customer extraction...
 
-    customers = get_customers(orders)
-    print(customers)  # Temporary print to verify extraction
+    items = get_items(orders)
+    print(items)  # Temporary print to verify compilation
 
 # Existing if __name__ == "__main__" block...
